@@ -1,0 +1,30 @@
+{
+    "ESP32_UART_CONFIG": {
+        "DEFAULT_PORT": "COM127",
+        "BAUD_RATE": 115200,
+        "TIMEOUT": 2.0,
+        "LINE_TERMINATOR": "\r\n",
+        "ESP32_BOOT_DELAY": 2.0
+    },
+    "ESP32_RESPONSE_PATTERNS": {
+        "GPIO_OUTPUT": "RESPONSE: GPIO_OUTPUT, PIN: (\\d+), STATUS: (\\w+)",
+        "GPIO_INPUT": "RESPONSE: GPIO_INPUT, PIN: (\\d+), VALUE: (\\w+), STATUS: (\\w+)",
+        "PWM_OUTPUT": "RESPONSE: PWM_OUTPUT, PIN: (\\d+), STATUS: (\\w+)",
+        "DAC_OUTPUT": "RESPONSE: DAC_OUTPUT, PIN: (\\d+), STATUS: (\\w+)",
+        "ADC_INPUT": "RESPONSE: ADC_INPUT, PIN: (\\d+), VALUE: (\\d+), STATUS: (\\w+)",
+        "GEN_SIGNAL": "RESPONSE: GEN_SIGNAL, TYPE: (\\d+), VALUE: ([0-9.]+), STATUS: (\\w+)",
+        "CLOSED_LOOP": "RESPONSE: CLOSED_LOOP, ID: (\\d+), STATUS: (\\w+)"
+    },
+    "ESP32_TIMING_PARAMS": {
+        "ESP32_BOOT_DELAY": 0.5,
+        "COMMAND_PROCESS_DELAY": 0.1,
+        "BUTTON_PRESS_DELAY": 0.1,
+        "INIT_MESSAGE_DELAY": 0.1
+    },
+    "ESP32_PIN_CONFIG": {
+        "Power Button": {"type": "GPIO", "number": 27},
+        "Heat Button": {"type": "GPIO", "number": 14},
+        "Power Triac Thermistor": {"type": "DAC", "number": 102},
+        "UI Triac Thermistor": {"type": "DAC", "number": 103}
+    }
+}
