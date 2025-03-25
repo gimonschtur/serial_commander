@@ -73,11 +73,13 @@ class SerialCommunication:
                 self.serial_port.read_all()
                 time.sleep(0.1)
 
+            self.logger.info(f"Serial port {port} opened successfully")
+
     def close_serial(self) -> None:
         """Close serial connection if open."""
         if self.serial_port and self.serial_port.is_open:
             self.serial_port.close()
-            self.logger.debug("Serial port closed")
+            self.logger.info("Serial port closed")
 
     def send_command(self, command: str, retry_count: int = 0,
                     context: Optional[Any] = None) -> bool:
