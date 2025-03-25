@@ -4,11 +4,21 @@ import sys
 import time
 import logging
 from typing import Any, Optional, Dict
-from utils.command_parser import parse_response  # Import the new parser
-from config.config_loader import load_esp32config
+from serial.tools import list_ports
+import os
+
+# Add the project root to sys.path
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+from imports.serial_commander.utils.command_parser import parse_response
+from imports.serial_commander.config.config_loader import load_esp32config
+
+default_config = load_esp32config().get('ESP32_UART_CONFIG')
 
 class SerialCommunication:
-    def __init__(self, config: Optional[Dict] = None, logger: Optional[logging.Logger] = None,
+    def __init__(self, config: Optional[Dict] = default_config, logger: Optional[logging.Logger] = None,
                  max_retries: int = 3, retry_delay: float = 0.5):
         """Initialize serial communication with retry parameters.
 
@@ -236,6 +246,16 @@ class SerialCommunication:
         """Context manager exit."""
         self.close_serial()
 
+    def list_available_ports(self) -> list:
+        """List all available serial ports.
+
+        Returns:
+            list: A list of available COM ports.
+        """
+        ports = list_ports.comports()
+        available_ports = [port.device for port in ports]
+        self.logger.info(f"Available COM ports: {available_ports}")
+        return available_ports
 
 def setup_logging(level: int = logging.INFO) -> None:
     """
@@ -249,59 +269,3 @@ def setup_logging(level: int = logging.INFO) -> None:
         format='%(asctime)s.%(msecs)03d [%(levelname)s] %(message)s',
         datefmt='%H:%M:%S'
     )
-
-def main() -> None:
-    config = load_esp32config().get('ESP32_UART_CONFIG')
-
-    """Command-line interface for serial communication."""
-    parser = argparse.ArgumentParser(
-        description="Send text messages over serial port and receive responses"
-    )
-    parser.add_argument(
-        "message",
-        help="Text message to send"
-    )
-    parser.add_argument(
-        "-p", "--port",
-        default=config.get('DEFAULT_PORT'),
-        help=f"Serial port (default: {config.get('DEFAULT_PORT')})"
-    )
-    parser.add_argument(
-        "-b", "--baudrate",
-        type=int,
-        default=config.get('BAUD_RATE'),
-        help=f"Baud rate (default: {config.get('BAUD_RATE')})"
-    )
-    parser.add_argument(
-        "-v", "--verbose",
-        action="store_true",
-        help="Enable verbose logging"
-    )
-
-    args = parser.parse_args()
-
-    # Setup logging
-    setup_logging(level=logging.DEBUG if args.verbose else logging.INFO)
-    logger = logging.getLogger(__name__)
-
-    # Create sender instance
-    sender = SerialCommunication(
-                config=config,
-                logger=logger,
-                max_retries=0,
-    )
-
-    # Send message and get response
-    success = sender.send_command(args.message)
-
-    # Handle result
-    if success:
-        logger.info(f"SUCCESS: Command sent to {args.port}: [{args.message}]")
-        logger.info(f"RESPONSE: [{sender.last_response}]")
-        sys.exit(0)
-    else:
-        logger.error(f"ERROR: Command failed to send to {args.port}: '{args.message}'")
-        sys.exit(1)
-
-if __name__ == "__main__":
-    main()

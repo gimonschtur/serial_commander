@@ -1,7 +1,7 @@
-import logging
 import re
-from typing import Optional
-from config.config_loader import load_esp32config
+import logging
+from typing import Dict, Optional
+from ..config.config_loader import load_esp32config
 
 def parse_response(response, logger: Optional[logging.Logger] = None):
     """Parse the response from ESP32.
