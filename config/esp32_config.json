@@ -3,7 +3,7 @@
         "DEFAULT_PORT": "COM127",
         "BAUD_RATE": 115200,
         "TIMEOUT": 2.0,
-        "LINE_TERMINATOR": "\r\n",
+        "LINE_TERMINATOR": "\n",
         "ESP32_BOOT_DELAY": 2.0
     },
     "ESP32_RESPONSE_PATTERNS": {
