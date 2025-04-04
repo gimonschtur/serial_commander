@@ -13,7 +13,8 @@
         "DAC_OUTPUT": "RESPONSE: DAC_OUTPUT, PIN: (\\d+), STATUS: (\\w+)",
         "ADC_INPUT": "RESPONSE: ADC_INPUT, PIN: (\\d+), VALUE: (\\d+), STATUS: (\\w+)",
         "GEN_SIGNAL": "RESPONSE: GEN_SIGNAL, TYPE: (\\d+), VALUE: ([0-9.]+), STATUS: (\\w+)",
-        "CLOSED_LOOP": "RESPONSE: CLOSED_LOOP, ID: (\\d+), STATUS: (\\w+)"
+        "CLOSED_LOOP": "RESPONSE: CLOSED_LOOP, ID: (\\d+), STATUS: (\\w+)",
+        "DEVICE_RESET": "RESPONSE: DEVICE_RESET, STATUS: (\\w+)"
     },
     "ESP32_TIMING_PARAMS": {
         "ESP32_BOOT_DELAY": 0.5,

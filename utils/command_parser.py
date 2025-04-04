@@ -112,5 +112,12 @@ def parse_response(response, logger: Optional[logging.Logger] = None):
                         'status': status
                     }
 
+                elif response_type == 'DEVICE_RESET':
+                    status, = groups
+                    return {
+                        'type': 'DEVICE_RESET',
+                        'status': status
+                    }
+
     logger.error("No valid response matched.")
     return None
