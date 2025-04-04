@@ -29,7 +29,7 @@ class SerialCommunication:
         """
         self.serial_port = None
         self.last_response = None
-        self.logger = logger or logging.getLogger(__name__)
+        self.logger = logger or logging.getLogger(self.__class__.__name__)
         self.uart_config = config
         self.max_retries = max_retries
         self.retry_delay = retry_delay
@@ -256,7 +256,7 @@ class SerialCommunication:
         """
         ports = list_ports.comports()
         available_ports = [port.device for port in ports]
-        self.logger.info(f"Available COM ports: {available_ports}")
+        self.logger.debug(f"Available COM ports: {available_ports}")
         return available_ports
 
 def setup_logging(level: int = logging.INFO) -> None:
