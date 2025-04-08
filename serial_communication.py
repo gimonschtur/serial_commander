@@ -99,9 +99,9 @@ class SerialCommunication:
 
             # Log the command and retry attempt if applicable
             if retry_count > 0:
-                self.logger.debug(f"Retry attempt {retry_count}/{self.max_retries} for command: {command}")
+                self.logger.info(f"Retry attempt {retry_count}/{self.max_retries} for command: [{command}]")
             else:
-                self.logger.debug(f"Sending command: [{command}]")
+                self.logger.info(f"Sending command: [{command}]")
 
             self._send_command(command)
 
@@ -230,7 +230,7 @@ class SerialCommunication:
         if parsed:
             self.logger.debug(f"Parsed response: {parsed}")
             if parsed['status'] == 'OK':
-                self.logger.debug("Response status is OK.")
+                self.logger.info("Response status is OK.")
                 return True
             else:
                 self.logger.warning(f"Response status is not OK: {parsed['status']}")

@@ -44,7 +44,7 @@ def parse_response(response, logger: Optional[logging.Logger] = None):
     # Process collected valid response lines
     for line in valid_responses:
 
-        logger.debug(f"Parsing valid response: {line}")  # Log the response being parsed
+        logger.debug(f"Parsing valid response: [{line}]")  # Log the response being parsed
 
         for response_type, pattern in load_esp32config().get('ESP32_RESPONSE_PATTERNS').items():
             match = re.match(pattern, line)
